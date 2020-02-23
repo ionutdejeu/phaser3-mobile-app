@@ -1,5 +1,7 @@
 import char_male_brown_hair_spritemap from '../../../assets/char_male_brown_hair.png';
 import blank_body_image from '../../../assets/blank_body.png';
+import TextFactroy from '../../../services/text_label_factory';
+import { CircularHealthBar } from '../../../services/circular_progressbar';
 export const required_assets = {
     head:{
         key:'char_male_brown_hair',
@@ -28,18 +30,24 @@ export const required_assets = {
 
 export class AgentBaseUI extends Phaser.GameObjects.Container{
     
-    constructor(scene){
+    constructor(scene,stats){
         super(scene,0,0);
+        this.health = new CircularHealthBar(scene,0,0); 
+        this.add(this.health.bar);
+        this.health.bar.setDepth(-1000);
+        
         this.visualBody = scene.add.image(0,20,required_assets.body.key).setDepth(10);
         this.add(this.visualBody);
         this.head =  this.createSpriteWithAnimation(scene,required_assets.head);
         this.head.anims.play('idle');
-
+        this.nameLabel = TextFactroy.create_text(scene,0,-50,stats.name);
+        this.add(this.nameLabel);
+    
     }
 
 
     animate(key){
-        console.log(this.head);
+         
         this.head.anims.play(key);
         this.head.anims.chain('idle');
     }
@@ -47,7 +55,7 @@ export class AgentBaseUI extends Phaser.GameObjects.Container{
         var sprite = scene.add.sprite(0, 0, assetObject.key)
         .setOrigin(0.5,0.5)
         .setScale(2);
-        console.log(sprite);
+         
         this.add(sprite);
         
         this.createAnimation(scene,sprite,assetObject.key,assetObject.anims.idle.key,0);
@@ -66,7 +74,7 @@ export class AgentBaseUI extends Phaser.GameObjects.Container{
         }
         scene.anims.create(config)
         spriteInstance.anims.load(animationKey);
-        console.log(spriteInstance.anims);
+         
     }
 
     static loadAssets(scene) {

@@ -40,11 +40,11 @@ export class AnimatedSprites extends Phaser.Scene {
         var anim = this.anims.create(config);
         var anim2 = this.anims.create(config2);
 
-        console.log(anim2);
+        
 
         var sprite = this.add.sprite(400, 300, 'mummy').setScale(4);
         var sprite2 = this.add.sprite(500, 400, 'character').setScale(2);
-        console.log(sprite);
+      
 
         sprite.anims.load('walk');
         sprite.anims.play('walk');
