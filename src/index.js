@@ -17,7 +17,7 @@ const config = {
   },
   pixelArt: true,
   roundPixels: true,
-  scene: [AnimatedSprites,BootScene,GameScene]
+  scene: [BootScene,GameScene,AnimatedSprites,]
 };
 
 const game = new Phaser.Game(config);

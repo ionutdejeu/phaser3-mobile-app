@@ -1,6 +1,8 @@
 import Phaser from "phaser";
 import { AgentController } from "../modules/agents/scripts/agent_controller";
 import {Powerup} from "../services/powerup_service";
+import {ScrollingCamera} from '../modules/levels/ScrollingCamera';
+
 export const ScenKey = "GameScene"
 export class GameScene extends Phaser.Scene {
     
@@ -9,7 +11,7 @@ export class GameScene extends Phaser.Scene {
             key: ScenKey
         })
         this.agentsPhysicsGroup = {};
-        this.mapScaleFactor = 10;
+        this.mapScaleFactor = 6;
     }
     
 
@@ -74,31 +76,36 @@ export class GameScene extends Phaser.Scene {
         this.tiles = this.map.addTilesetImage('office_spritemap', 'office_spritemap', 8, 8, 0, 0);
         // create our background
         this.backgroundLayer = this.map.createStaticLayer('background', this.tiles, 0, 0);
-        this.backgroundLayer.setScale(4);
+        this.backgroundLayer.setScale(this.mapScaleFactor);
 
         // create our walltp 
         this.walltop = this.map.createStaticLayer('walltops', this.tiles, 0, 0);
-        this.walltop.setScale(4);
+        this.walltop.setScale(this.mapScaleFactor);
         
 
         // create our furniture 
         this.furniture = this.map.createStaticLayer('furniture', this.tiles, 0, 0);
-        this.furniture.setScale(4);
+        this.furniture.setScale(this.mapScaleFactor);
         this.furniture.setCollisionByExclusion([-1]);
 
         // create our charis 
         this.charis = this.map.createStaticLayer('charis', this.tiles, 0, 0);
-        this.charis.setScale(4);
+        this.charis.setScale(this.mapScaleFactor);
         this.charis.setCollisionByExclusion([-1]);
 
         console.log(this.physics.world.bounds);
         //update the world bounds
-        this.physics.world.bounds.width = this.map.widthInPixels * 4;
-        this.physics.world.bounds.height = this.map.heightInPixels * 4;
+        this.physics.world.bounds.width = this.map.widthInPixels * this.mapScaleFactor;
+        this.physics.world.bounds.height = this.map.heightInPixels * this.mapScaleFactor;
 
         //limit the camera to the size of our map
-        this.cameras.main.setBounds(0, 0, this.map.widthInPixels * 4, this.map.heightInPixels * 4);
-         
+        //this.cameras.main.setBounds(0, 0, this.map.widthInPixels * 4, this.map.heightInPixels * 4);
+        var camera = new ScrollingCamera(this,{
+            x:0,
+            y:0,
+            bottom:this.map.widthInPixels *this.mapScaleFactor,
+            right:this.map.heightInPixels * this.mapScaleFactor
+        });
       }
     crearePowerup(position){
         var p = new Powerup(this,position.x,position.y,{ });
