@@ -25,7 +25,8 @@ export class ScrollingCamera extends Phaser.Cameras.Scene2D.Camera {
         this.left = left; 
        
         this.setBounds(x, y, right,bottom);
-        console.log(this.bottom,this.right);
+         
+        this.setRoundPixels(true);
        
         this.init();
     }
@@ -49,7 +50,7 @@ export class ScrollingCamera extends Phaser.Cameras.Scene2D.Camera {
     }
 
     downHandler() {
-        console.log('donw handler');
+        
         
     }
 
@@ -74,7 +75,7 @@ export class ScrollingCamera extends Phaser.Cameras.Scene2D.Camera {
        
     }
     upHandler() {
-        console.log('up handler');
+       
         this.moving = false;
     }
 
@@ -85,7 +86,7 @@ export class ScrollingCamera extends Phaser.Cameras.Scene2D.Camera {
         if(this.moving){
             this.scrollY = Phaser.Math.Clamp(this.scrollY, this.top, this.bottom);
             this.scrollX = Phaser.Math.Clamp(this.scrollX,this.left,this.right); 
-            console.log('this.scrollX',this.scrollX,'this.scrollY',this.scrollY);
+             
         }
     }
 

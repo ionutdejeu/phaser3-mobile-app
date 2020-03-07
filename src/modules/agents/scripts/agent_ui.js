@@ -4,6 +4,7 @@ import TextFactroy from '../../../services/text_label_factory';
 import { CircularHealthBar } from '../../../services/circular_progressbar';
 export const required_assets = {
     head:{
+      
         key:'char_male_brown_hair',
         file:char_male_brown_hair_spritemap,
         config:{frameWidth: 32, frameHeight: 32},
@@ -32,10 +33,10 @@ export class AgentBaseUI extends Phaser.GameObjects.Container{
     
     constructor(scene,stats){
         super(scene,0,0);
-        this.health = new CircularHealthBar(scene,0,0); 
+        this.health = new CircularHealthBar(scene,0,0,stats.getStyleColor()); 
         this.add(this.health.bar);
         this.health.bar.setDepth(-1000);
-        
+        this.health.setValue(stats._trust);
         this.visualBody = scene.add.image(0,20,required_assets.body.key).setDepth(10);
         this.add(this.visualBody);
         this.head =  this.createSpriteWithAnimation(scene,required_assets.head);
@@ -45,7 +46,9 @@ export class AgentBaseUI extends Phaser.GameObjects.Container{
     
     }
 
-
+    updateUI(trust){
+        this.health.setValue(Phaser.Math.Clamp(100-trust,0.01,99.99));
+    }
     animate(key){
          
         this.head.anims.play(key);

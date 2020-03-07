@@ -59,6 +59,7 @@ export class GameScene extends Phaser.Scene {
         this.physics.add.collider(agents,this.furniture);
         
         
+        
     }
     createLayer(layerName,tileSet,setCollsion){
         var newLayer = this.map.createStaticLayer(layerName, tileSet, 0, 0);
@@ -100,6 +101,7 @@ export class GameScene extends Phaser.Scene {
 
         //limit the camera to the size of our map
         //this.cameras.main.setBounds(0, 0, this.map.widthInPixels * 4, this.map.heightInPixels * 4);
+        this.cameras.remove(this.cameras.main);
         var camera = new ScrollingCamera(this,{
             x:0,
             y:0,

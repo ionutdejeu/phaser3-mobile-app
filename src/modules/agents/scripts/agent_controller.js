@@ -1,7 +1,7 @@
-import char_male_brown_hair_spritemap from '../../../assets/char_male_brown_hair.png';
-import blank_body_image from '../../../assets/blank_body.png';
+
 import { AgentBaseUI } from './agent_ui';
 import { AgentsStats } from './agent_stats';
+import {powerupEvents} from '../../../services/powerup_service.js';
 
 export class AgentController extends Phaser.GameObjects.Container{
     
@@ -16,15 +16,23 @@ export class AgentController extends Phaser.GameObjects.Container{
         this.setStats();
         this.visual = new AgentBaseUI(scene,this.stats);
         this.add(this.visual);
+         
+        scene.events.on(powerupEvents.ACTIVATED,this.powerUpActivatedHandler,this);
     }
-     
+    powerUpActivatedHandler(payload){
+        
+        this.stats.applyPowerUpHandler(payload.options.type)
+        console.log(this.stats._trust);
+        this.visual.updateUI(this.stats._trust);
+    }
+    
     static loadAssets(scene) {
         AgentBaseUI.loadAssets(scene);
     }
 
     setStats(){
         this.stats = new AgentsStats();
-        this.stats.name = 'Agent';
+        this.stats.randomStats();
     }
 
     setStartingPosition(scene){

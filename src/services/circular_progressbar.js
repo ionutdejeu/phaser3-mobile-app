@@ -13,14 +13,16 @@ export class HealthBarOptions{
 }
 export class CircularHealthBar { 
    
-    constructor (scene , x, y)
+    constructor (scene , x, y,borderColor)
     {
         this.bar = new Phaser.GameObjects.Graphics(scene);
         this.x = x;
         this.y = y;
         this.value = 100;
         this.p = 360 / 100;
+        this.borderColor = borderColor || 0x34b1eb;
         this.draw();
+       
         scene.add.existing(this.bar);
     }
   
@@ -49,17 +51,11 @@ export class CircularHealthBar {
         let d = Math.floor(this.p * this.value);
          
         this.bar.beginPath();
-        if (this.value < 30)
-        {
-            this.bar.fillStyle(0xff0000);
-            this.bar.lineStyle(20, 0xff0000);
-        }
-        else
-        {
-            this.bar.fillStyle(0x00ff00);
-            this.bar.lineStyle(20, 0x00ff00);
-        }  
-        this.bar.arc(this.x, this.y, 50, Phaser.Math.DegToRad(0), Phaser.Math.DegToRad(d), true, 0.02);
+        
+        this.bar.fillStyle(this.borderColor);
+        this.bar.lineStyle(20, this.borderColor);   
+         
+        this.bar.arc(this.x, this.y, 40, Phaser.Math.DegToRad(0), Phaser.Math.DegToRad(d), true, 0.02);
         this.bar.strokePath();
         this.bar.closePath();
   
