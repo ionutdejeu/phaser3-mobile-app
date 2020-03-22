@@ -18,6 +18,7 @@ export const typesOfCommunication ={
 
 export class AgentsStats{
     
+    
     constructor(){
         this.stats = {};
         this._trust = Phaser.Math.Between(25,75); 
@@ -43,17 +44,18 @@ export class AgentsStats{
     }
     applyPowerUpHandler(style){
         // apply bonus 
+        var trustBefore = this._trust;
         if(style == this._prefferedStyle.title)
         {
-            this._trust = Phaser.Math.Clamp(this._trust+2,0,100);      
+            this._trust = Phaser.Math.Clamp(this._trust+10,0,100);      
         }
         
         // apply penalty 
         if(style == this._leastPrefferedStyle.title)
         {
-            this._trust -= Phaser.Math.Clamp(this._trust-2,0,100);
+            this._trust -= Phaser.Math.Clamp(this._trust-20,0,100);
         }
-        
+        console.log('before:',trustBefore,' after:',this._trust);
     }
 
     randomStats(){
@@ -91,7 +93,7 @@ export class AgentsStats{
         }
         this.stats['name'] = this.nameCollection[Phaser.Math.Between(0,this.nameCollection.length-1)];
         // set starting trust by random value 
-        this.stats
+        
     }
 
     

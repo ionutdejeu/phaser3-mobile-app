@@ -22,7 +22,7 @@ export class AgentController extends Phaser.GameObjects.Container{
     powerUpActivatedHandler(payload){
         
         this.stats.applyPowerUpHandler(payload.options.type)
-        console.log(this.stats._trust);
+        
         this.visual.updateUI(this.stats._trust);
     }
     
